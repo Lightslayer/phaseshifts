@@ -39,7 +39,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # - windows-latest  # TODO: Needs #32 to be resolved
+          - windows-latest  # TODO: Needs #32 to be resolved
           # - macos-latest
         python-version:
           # NOTE: 2.7 through to 3.6 inclusive are not provided in the ubuntu-latest runner

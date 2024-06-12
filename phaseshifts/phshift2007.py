@@ -12,6 +12,18 @@ PHSHIFT2007_DOWNLOAD_URL = (
 )
 DEFAULT_DIRPATH = "."
 
+COMPILER_FLAGS = {
+    "gfortran": [
+        "-pie",
+        "-Wall",
+        "-static-libgcc",
+        "-static-libgfortran",
+        "-frecursive",
+        "-fcheck=bounds",
+        "-std=legacy",
+    ]
+}
+
 
 def download_phshift2007(dirpath=DEFAULT_DIRPATH):
     # type: (str) -> str
@@ -71,19 +83,17 @@ def _compile_fortran_program(source_filepath, output_filepath=None):
             os.path.dirname(source_filepath),
             os.path.basename(source_filepath).replace(".for", ""),
         )
-    args = [
-        "gfortran",
-        "-pie",
-        "-Wall",
-        "-static-libgcc",
-        "-static-libgfortran",
-        "-frecursive",
-        "-fcheck=bounds",
-        "-std=legacy",
-        "-o",
-        output_filepath,
-        source_filepath,
-    ]
+        if sys.platform == "win32":
+            output_filepath += ".exe"
+    args = (
+        ["gfortran"]
+        + COMPILER_FLAGS["gfortran"]
+        + [
+            "-o",
+            output_filepath,
+            source_filepath,
+        ]
+    )
     print(" ".join(args))
     with subprocess.Popen(args) as proc:  # nosec
         status = proc.wait()

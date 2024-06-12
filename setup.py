@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(__file__))
 
 try:
     import phaseshifts
+    import phaseshifts.phshift2007
 except ModuleNotFoundError:
     phaseshifts = None  # type: ignore [assignment]
 
@@ -16,7 +17,7 @@ try:
     import setuptools  # type: ignore [import-untyped]
     from setuptools import find_packages, setup, Extension  # type: ignore [import-untyped]
 except ImportError:
-    from distutils.core import find_packages  # type: ignore [attr-defined]
+    from distutils.core import find_packages  # type: ignore [attr-defined,no-redef]
 
 INCLUDE_DIRS = []
 
@@ -30,7 +31,7 @@ except ImportError:
 
 BUILD_BACKEND = None
 try:
-    from numpy.distutils.core import Extension, setup
+    from numpy.distutils.core import Extension, setup  # type: ignore  # noqa
 
     BUILD_BACKEND = "numpy.distutils"
 except ModuleNotFoundError as npy_err:
@@ -51,23 +52,25 @@ except ModuleNotFoundError as npy_err:
         # FIXME: Generated wheels unaware of native extension & deemed universal; *.so must be included in MANIFEST.in
         import subprocess
 
-        setup = setuptools.setup
+        setup = setuptools.setup  # noqa: F811
 
         BUILD_BACKEND = "numpy.f2py"
         if not any(x in sys.argv for x in ("sdist", "wheel")):
-            subprocess.check_call(
-                [
-                    sys.executable,
-                    "-m",
-                    "numpy.f2py",
-                    "libphsh.f",
-                    "-m",
-                    "libphsh",
-                    "-c",
-                    "-f77flags='-frecursive'",
-                ],
-                cwd="./phaseshifts/lib",
-            )
+            args = [
+                sys.executable,
+                "-m",
+                "numpy.f2py",
+                "libphsh.f",
+                "-m",
+                "libphsh",
+                "-c",
+                "-f77flags='-frecursive'",
+            ]
+            try:
+                args += phaseshifts.phshift2007.COMPILER_FLAGS["gfortran"]
+            except NameError:
+                pass
+            subprocess.check_call(args, cwd="./phaseshifts/lib")  # nosec
         try:
             import numpy.f2py
 
@@ -116,11 +119,26 @@ f2py_exts_sources = {
         ),
     ]
 }
+
+try:
+    gfortran_compiler_args = phaseshifts.phshift2007.COMPILER_FLAGS["gfortran"]
+except NameError:
+    gfortran_compiler_args = []
+
 f2py_platform_extra_args = {
     "darwin": {"extra_link_args": [], "extra_compile_args": []},
-    "win32": {"extra_link_args": [], "extra_compile_args": []},
-    "linux": {"extra_link_args": ["-lgomp"], "extra_compile_args": ["-fopenmp"]},
-    "linux2": {"extra_link_args": ["-lgomp"], "extra_compile_args": ["-fopenmp"]},
+    "win32": {
+        "extra_link_args": gfortran_compiler_args,
+        "extra_compile_args": gfortran_compiler_args,
+    },
+    "linux": {
+        "extra_link_args": gfortran_compiler_args + ["-lgomp"],
+        "extra_compile_args": gfortran_compiler_args + ["-fopenmp"],
+    },
+    "linux2": {
+        "extra_link_args": gfortran_compiler_args + ["-lgomp"],
+        "extra_compile_args": gfortran_compiler_args + ["-fopenmp"],
+    },
 }[sys.platform]
 
 f2py_exts = (
