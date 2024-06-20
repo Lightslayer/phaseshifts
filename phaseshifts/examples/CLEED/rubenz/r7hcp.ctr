@@ -1,0 +1,20 @@
+#  Ru(001) + (r7xr7) Benzol on hcp site
+#  (control file for R factor program CRFAC)
+#  ef=<experimental input file>
+#  ti=<corresponding indices in theoretical input file>
+#  id=<group ID>
+#  : = separator
+ef=Ru001r7C6D6.iv06.fsm:ti=(0.43,-1.29)+(1.29,-0.86):id=06:wt=1.
+ef=Ru001r7C6D6.iv01.fsm:ti=(0.43,-0.29)+(0.29,0.14):id=01:wt=1.
+ef=Ru001r7C6D6.iv02.fsm:ti=(-0.57,0.71)+(-0.71,0.14):id=02:wt=1.
+ef=Ru001r7C6D6.iv03.fsm:ti=(-0.57,-0.29)+(0.29,-0.86):id=03:wt=1.
+ef=Ru001r7C6D6.iv04.fsm:ti=(0.00,1.00)+(1.00,0.00):id=04:wt=1.
+ef=Ru001r7C6D6.iv05.fsm:ti=(0.43,0.71)+(-0.71,1.14):id=05:wt=1.
+ef=Ru001r7C6D6.iv07.fsm:ti=(1.43,-0.29)+(0.29,1.14):id=07:wt=1.
+ef=Ru001r7C6D6.iv89:ti=(1.29,0.14)+(-1.57,0.71)+(-0.71,-0.86)+(1.43,-1.29):id=09:wt=1.
+ef=Ru001r7C6D6.iv10.fsm:ti=(-0.57,1.71)+(-1.71,1.14):id=10:wt=1.
+ef=Ru001r7C6D6.iv11.fsm:ti=(-0.57,-1.29)+(-1.71,0.14):id=11:wt=1.
+ef=Ru001r7C6D6.iv12.fsm:ti=(1.29,-1.86)+(-1.57,1.71):id=12:wt=1.
+ef=Ru001r7C6D6.iv13.fsm:ti=(-1.57,-0.29)+(0.29,-1.86):id=13:wt=1.
+ef=Ru001r7C6D6.iv17:ti=(0.00,2.00)+(2.00,0.00):id=17:wt=1.
+ef=Ru001r7C6D6.iv14:ti=(1.00,1.00)+(2.00,-1.00):id=14:wt=1.

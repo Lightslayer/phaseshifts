@@ -545,7 +545,7 @@ def main(argv=None):
             "--tmpdir",
             dest="tmpdir",
             metavar="<temp_dir>",
-            help="temporary directory for intermediate file generation",
+            help="temporary directory for intermediate " "file generation",
         )
         parser.add_argument(
             "-l",
@@ -592,6 +592,27 @@ def main(argv=None):
             "[default: %(default)s]",
         )
         parser.add_argument(
+            "-a",
+            "--atorbs-only",
+            dest="atorbs_only",
+            action="store_true",
+            default=False,
+            help="Only generate atomic orbitals of elements "
+            "found in the input files using Eric Shirley's "
+            "hartfock routine, then exit. "
+            "[default: %(default)s]",
+        )
+        parser.add_argument(
+            "-p",
+            "--package",
+            dest="package",
+            metavar="<package>",
+            default="VHT",
+            help="Selects package to use for phase shift "
+            "calculations. Choices are 'VHT' (van Hove-Tong) "
+            "or 'Rundgren' (EEASiSSS). [default: %(default)s]",
+        )
+        parser.add_argument(
             "-S",
             "--store",
             dest="store",
@@ -604,7 +625,9 @@ def main(argv=None):
             "--verbose",
             dest="verbose",
             action="count",
-            help="set verbosity level [default: %(default)s]",
+            help="Set verbosity level. Note this will also "
+            "produce postscript graphs when using the EEASiSSS"
+            "backend. [default: %(default)s]",
         )
         parser.add_argument(
             "-V", "--version", action="version", version=program_version_message

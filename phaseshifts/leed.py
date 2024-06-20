@@ -341,6 +341,9 @@ class Converter:
         z_dist = 4.0  # calculate 'c' for slab from atom coordinates
         z_min = sys.float_info.max
         z_max = sys.float_info.min
+        title = "/".join(
+            [line.split(":")[1].lstrip() for line in lines if line.startswith("c:")]
+        )
 
         # Hartree-Fock exchange term alpha
         try:
@@ -651,6 +654,7 @@ class Converter:
         unitcell = model.Unitcell(a, c, [a1, a2, a3])
 
         mtz_model = model.MTZ_model(unitcell, atoms)
+        mtz_model.name = title
 
         if alpha:
             mtz_model.set_exchange(alpha)

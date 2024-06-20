@@ -441,7 +441,28 @@ class Model(object):
                 "Not every atom position in model is unique!\n%s\n" % info
             )
 
-    def set_atoms(self, atoms):
+    @property
+    def name(self):
+        """Returns the model name"""
+        return self.name or ""
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of the model"""
+        self.name = str(name) if not isinstance(name, str) else name
+
+    @property
+    def elements(self):
+        """Returns a list of unique elements within the model"""
+        return {atom.element for atom in self.atoms}
+
+    @property
+    def atoms(self):
+        """Returns a list of atoms within this model"""
+        return self.atoms or []
+
+    @atoms.setter
+    def atoms(self, atoms):
         """
         Set the atoms for the model.
 
@@ -590,7 +611,7 @@ class MTZ_model(Model):
         except:
             pass
 
-    def load_from_file(self, filename):
+    def _load_input_file(self, filename):
         """
         Description
         -----------
@@ -681,6 +702,32 @@ class MTZ_model(Model):
 
         except ValueError:
             raise ValueError("malformatted input in '%s'" % filename)
+
+    def load_from_file(self, filename):
+        """
+        Description
+        -----------
+        Load an input file and update the class instance variables
+
+        Parameters
+        ----------
+        filename : str
+            The path of the input file (e.g. cluster*.i or *slab*.i)
+
+        Raises
+        ------
+        IOError : exception
+            If the file cannot be read.
+        TypeError : exception
+            If a input line cannot be parsed correctly.
+
+        """
+
+        filename = glob(os.path.expanduser(os.path.expandvars(filename)))[0]
+        if CLEED_validator.is_CLEED_file(filename):
+            self = Converter.import_CLEED(filename)
+        else:
+            self._load_input_file(filename)
 
     def create_atorbs(self, **kwargs):
         """

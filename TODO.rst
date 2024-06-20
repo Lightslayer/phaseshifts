@@ -47,7 +47,9 @@ be included as this package matures, which include:
 
  5. REST API to allow some sort of web stack usage, see https://github.com/Liam-Deacon/phaseshifts/issues/9
 
- 6. Miscellanea - address limitations of libphsh.f. In particular:
+ 6. Miscellanea:
+
+    Address limitations of libphsh.f. In particular:
       + Allow dynamic allocation of key arrays for input files with any number of atoms
       + Address truncation of phase shift labels over 9 characters in length
       + Improve readability (it would be nice to eliminate *goto* statements)
@@ -56,3 +58,6 @@ be included as this package matures, which include:
       + Pure-Python implementation of functionality, which would be particularly useful for users
         with restricted environments and/or to avoid specific compiler quirks
         (needs rigorous regression testing to ensure faithfulness of port)
+
+    Ensure mutual compatibility between hartfock and model input files from
+    EEASiSSS and Barbieri/Van Hove backends.

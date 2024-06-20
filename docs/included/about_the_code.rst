@@ -1,7 +1,7 @@
 About the code
 ==============
 
-The example source codes provided in this package are intended to be
+The example source code provided in this package are intended to be
 instructional in calculating phase shifts. While it is not recommended to
 use the example code in production, the code
 should be sufficient to explain the general use of the library.

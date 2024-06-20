@@ -29,9 +29,9 @@ requires CPython 2.7 or later and also uses the `numpy
 <http://www.scipy.org/scipylib/download.html>`_, `scipy
 <http://www.scipy.org/scipylib/download.html>`_ and `periodictable
 <http://https://pypi.python.org/pypi/periodictable>`_ packages.
-Currently, it has only been tested extensively with Python 2.7 on Windows, so
-there are no guarantees with other platforms. To perform a setup follow the
-steps below.
+Currently, it has only been tested extensively with Python 2.7 on Windows,
+and Ubuntu Linux so there are no guarantees with other platforms.
+To perform a setup follow the steps below.
 
  1. Install the numpy, scipy and periodictable packages.
 

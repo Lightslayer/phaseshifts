@@ -22,6 +22,8 @@ Contents:
    modules
    porting_phshift2007_notes
    authors
+   bvh_package
+   eeasisss_package
    *
 
 Indices and tables
