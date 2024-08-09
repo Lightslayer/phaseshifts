@@ -1,4 +1,4 @@
-numpydoc==1.6.0
+numpydoc==1.8.0
 # This file is used for readthedocs build
 # NOTE: This should be (manually) synched with setup.py/pyproject.toml requirements
 sphinx>=7,<8
